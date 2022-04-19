@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Services\CreatingService;
+use App\Http\Controllers\Services\Helpers;
 use App\Http\Controllers\Services\UpdatingService;
 use App\Http\Controllers\Services\ValidationService;
 use App\Models\Manager;
@@ -10,7 +12,7 @@ use Illuminate\Http\Request;
 
 class ManagerController extends Controller
 {
-    use ValidationService, UpdatingService;
+    use ValidationService, UpdatingService, CreatingService, Helpers;
 
     public function index()
     {
@@ -22,12 +24,20 @@ class ManagerController extends Controller
 
     public function create()
     {
-        //
+        return view('components.manager.add');
     }
 
     public function store(Request $request)
     {
-        //
+        $this->managerCreateValidation($request);
+
+        if($this->userExists($request->email)) {
+            return redirect(route('managers.create'))->with('exists', 'yes')->withInput();
+        }
+
+        $this->createManager($request);
+
+        return redirect(route('managers.index'))->with('done', 'Added!');
     }
 
     public function show($username)
@@ -58,8 +68,30 @@ class ManagerController extends Controller
             ->with('done', 'Updated!');
     }
 
-    public function destroy($id)
+    public function destroy($ids) // manager id
     {
-        //
+        //! less performance because there are new db connection
+        // $user_id = Manager::select('user_id')->where('id', $id)->get()->first()->user_id;
+
+        $ids = explode('&', $ids);
+
+        User::where('id', $ids[0])->update([
+            'role' => NULL
+        ]);
+
+        Manager::destroy($ids[1]);
+
+        return back()->with('done', 'Deleted!');
+    }
+
+    function createWithExistingEmail(Request $request) {
+        $user = User::where('email', $request->email)->first();
+        if( $this->managerExists($user->id) ) {
+            return redirect(route('managers.create'))->with('err', 'This Email Has Been Already Used By Another Manager!!')->withInput();
+        } else {
+            $this->createManager($request, $user);
+
+            return redirect(route('managers.index'))->with('done', 'Added!');
+        }
     }
 }

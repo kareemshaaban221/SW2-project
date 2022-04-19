@@ -43,6 +43,8 @@
             setTimeout(() => {
                 $(elem).addClass('d-none')
             }, 5000);
-        })
+        });
+
+        $('[data-toggle="tooltip"]').tooltip();
     });
 </script>

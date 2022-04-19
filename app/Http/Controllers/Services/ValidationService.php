@@ -14,4 +14,10 @@ trait ValidationService {
             'phone' => 'required|digits:11|starts_with:011,010,015,012'
         ]);
     }
+
+    protected function managerCreateValidation(Request $request) {
+        $request->validate([
+            'email' => 'required|string|max:255|email'
+        ]);
+    }
 }

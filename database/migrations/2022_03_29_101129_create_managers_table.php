@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('managers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->index()->unique();
-            $table->decimal('salary');
-            $table->string('national_id')->unique();
+            $table->decimal('salary')->nullable();
+            $table->string('national_id')->unique()->nullable();
             $table->timestamps();
         });
     }

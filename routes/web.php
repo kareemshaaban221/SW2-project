@@ -30,6 +30,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/home','App\Http\Controllers\HomeController@index')->name('home');
 
     // manager routes
-    Route::resource('managers', ManagerController::class);
+    Route::resource('/managers', ManagerController::class);
+    Route::post('/managers/create/exists', [
+        ManagerController::class, 'createWithExistingEmail'
+    ])->name('managers.create.exists');
 
 });
