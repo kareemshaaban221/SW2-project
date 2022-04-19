@@ -1,9 +1,9 @@
 ## Getting started
 
-- clone branch lara-backend
+- clone branch backend-admin
 
 ```
-git clone -b lara-backend https://github.com/Farag-dev/SW-projet.git
+git clone -b backend-admin https://github.com/Farag-dev/SW-projet.git
 ```
 
 - Go to the folder `SW-projet`
