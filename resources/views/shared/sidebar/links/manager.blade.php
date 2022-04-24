@@ -25,8 +25,8 @@
         </a>
         <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
             <nav class="sb-sidenav-menu-nested nav">
-                <a class="nav-link" href="">List All Doctors</a>
-                <a class="nav-link" href="">Add Doctor</a>
+                <a class="nav-link" href="{{ route('doctor') }}">List All Doctors</a>
+                <a class="nav-link" href="{{ route('add.doctor') }}">Add Doctor</a>
             </nav>
         </div>
         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"  data-bs-target="#pagesCollapseAssistent" aria-expanded="false" aria-controls="pagesCollapseAssistent" >
@@ -35,8 +35,8 @@
         </a>
         <div class="collapse" id="pagesCollapseAssistent" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
             <nav class="sb-sidenav-menu-nested nav">
-                <a class="nav-link" href="patientinfo.html">List All Assistants</a>
-                <a class="nav-link" href="addpatient.html">Add Assistant</a>
+                <a class="nav-link" href="{{ route('assistant') }}">List All Assistants</a>
+                <a class="nav-link" href="{{ route('add.assistant') }}">Add Assistant</a>
             </nav>
         </div>
 
@@ -46,8 +46,8 @@
         </a>
         <div class="collapse" id="collapseAccountant" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
             <nav class="sb-sidenav-menu-nested nav">
-                <a class="nav-link" href="addpatient.html">List All Accountants</a>
-                <a class="nav-link" href="patientinfo.html">Add Accountant</a>
+                <a class="nav-link" href="{{ route('accountant') }}">List All Accountants</a>
+                <a class="nav-link" href="{{ route('add.accountant') }}">Add Accountant</a>
             </nav>
         </div>
     </nav>

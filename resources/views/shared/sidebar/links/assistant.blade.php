@@ -6,7 +6,7 @@
 </a>
 <div class="collapse" id="collapsePatients" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
     <nav class="sb-sidenav-menu-nested nav">
-        <a class="nav-link" href="patientinfo.html">List All Patients</a>
-        <a class="nav-link" href="addpatient.html">Add Patient</a>
+        <a class="nav-link" href="{{ route('patient') }}">List All Patients</a>
+        <a class="nav-link" href="{{ route('add.patient') }}">Add Patient</a>
     </nav>
 </div>
