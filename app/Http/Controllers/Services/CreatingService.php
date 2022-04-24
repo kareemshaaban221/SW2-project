@@ -10,7 +10,8 @@ trait CreatingService {
     protected function createManager(Request $request, $user = NULL) {
         if(!$user)
             $user = User::create([
-                'email' => $request->email
+                'email' => $request->email,
+                'role' => 'manager'
             ]);
 
         $manager = new Manager();

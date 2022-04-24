@@ -16,8 +16,8 @@ class ManagerController extends Controller
 
     public function index()
     {
-        return view('components.table', [
-            'rows' => Manager::with('user')->limit(10)->get(),
+        return view('components.manager.list', [
+            'managers' => Manager::with('user')->limit(10)->get(),
             'title' => 'managers'
         ]);
     }

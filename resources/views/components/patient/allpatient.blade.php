@@ -43,15 +43,15 @@
             </tfoot>
             <tbody>
 
-                @foreach ($rows as $row)
-                    @if (!$row->user->username)
+                @foreach ($patients as $patient)
+                    @if (!$patient->user->username)
 
                     <tr class="bg-danger">
                         <td class="text-light">Hasn't Registered Yet!</td>
-                        <td class="text-light">{{$row->user->email}}</td>
+                        <td class="text-light">{{$patient->user->email}}</td>
                         <td class="text-light">Hasn't Registered Yet!</td>
                         <td class="text-light">
-                            <form action="{{route('delete.patient', $row->user->id . '&' . $row->id)}}" method="POST" class="p-0">
+                            <form action="{{route('delete.patient', $patient->user->id . '&' . $patient->id)}}" method="POST" class="p-0">
                                 @csrf
                                 @method('DELETE')
                                 <button onclick="return confirm('Are you sure to complete this operation?')" type="submit" class="btn border-none text-light p-0">
@@ -65,17 +65,17 @@
 
                     <tr>
                         <td>
-                            <a href="{{route('show.patient', $row->user->username)}}" class="text-decoration-none">
-                                {{ucwords($row->user->fname . ' ' . $row->user->lname)}}
+                            <a href="{{route('show.patient', $patient->user->username)}}" class="text-decoration-none">
+                                {{ucwords($patient->user->fname . ' ' . $patient->user->lname)}}
                             </a>
-                            <a href="{{route('edit.patient', $row->user->username)}}" class="m-2">
+                            <a href="{{route('edit.patient', $patient->user->username)}}" class="m-2">
                                 <i class="fa fa-edit"></i>
                             </a>
                         </td>
-                        <td>{{$row->user->email}}</td>
-                        <td>{{$row->user->phone}}</td>
+                        <td>{{$patient->user->email}}</td>
+                        <td>{{$patient->user->phone}}</td>
                         <td>
-                            <form action="{{route('delete.patient', $row->user->id . '&' . $row->id)}}" method="POST" class="p-0">
+                            <form action="{{route('delete.patient', $patient->user->id . '&' . $patient->id)}}" method="POST" class="p-0">
                                 @csrf
                                 @method('DELETE')
                                 <button onclick="return confirm('Are you sure to complete this operation?')" type="submit" class="btn border-none text-danger p-0">

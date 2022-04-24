@@ -14,7 +14,7 @@ class AssistantContoller extends Controller
     public function index()
     {
         return view('components.assistant.allassistant', [
-            'rows' => Receptionist::with('user')->limit(10)->get(),
+            'receptionists' => Receptionist::with('employee')->limit(10)->get(),
             'title' => 'assistant'
         ]);
     }
@@ -28,7 +28,7 @@ class AssistantContoller extends Controller
 
     public function store(Request $request)
     {
-        $assistant=new Assistant();
+        $assistant=new Receptionist();
         $assistant->email=$request->email;
         $assistant->save();
 
@@ -72,8 +72,8 @@ class AssistantContoller extends Controller
 
     public function destroy($id)
     {
-        $assistant= Assistant::find($id);
+        $assistant= Receptionist::find($id);
         $assistant->delete();
-        return  redirect()->back();
+        return redirect()->back();
     }
 }

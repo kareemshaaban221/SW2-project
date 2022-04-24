@@ -10,7 +10,7 @@ class AccountantContoller extends Controller
     public function index()
     {
         return view('components.accountant.allaccountants', [
-            'rows' => Accountant::with('user')->limit(10)->get(),
+            'accoutants' => Accountant::with('employee')->limit(10)->get(),
             'title' => 'Accountants'
         ]);
     }
@@ -25,8 +25,8 @@ class AccountantContoller extends Controller
     public function store(Request $request)
     {
         $accountant=new Accountant();
-        $accountent->email=$request->email;
-        $accountent->save();
+        $accountant->email=$request->email;
+        $accountant->save();
 
         return  redirect()->back();
     }

@@ -43,15 +43,15 @@
             </tfoot>
             <tbody>
 
-                @foreach ($rows as $row)
-                    @if (!$row->user->username)
+                @foreach ($managers as $manager)
+                    @if (!$manager->user->username)
 
                     <tr class="bg-danger">
                         <td class="text-light">Hasn't Registered Yet!</td>
-                        <td class="text-light">{{$row->user->email}}</td>
+                        <td class="text-light">{{$manager->user->email}}</td>
                         <td class="text-light">Hasn't Registered Yet!</td>
                         <td class="text-light">
-                            <form action="{{route('managers.destroy', $row->user->id . '&' . $row->id)}}" method="POST" class="p-0">
+                            <form action="{{route('managers.destroy', $manager->user->id . '&' . $manager->id)}}" method="POST" class="p-0">
                                 @csrf
                                 @method('DELETE')
                                 <button onclick="return confirm('Are you sure to complete this operation?')" type="submit" class="btn border-none text-light p-0">
@@ -65,17 +65,17 @@
 
                     <tr>
                         <td>
-                            <a href="{{route('managers.show', $row->user->username)}}" class="text-decoration-none">
-                                {{ucwords($row->user->fname . ' ' . $row->user->lname)}}
+                            <a href="{{route('managers.show', $manager->user->username)}}" class="text-decoration-none">
+                                {{ucwords($manager->user->fname . ' ' . $manager->user->lname)}}
                             </a>
-                            <a href="{{route('managers.edit', $row->user->username)}}" class="m-2">
+                            <a href="{{route('managers.edit', $manager->user->username)}}" class="m-2">
                                 <i class="fa fa-edit"></i>
                             </a>
                         </td>
-                        <td>{{$row->user->email}}</td>
-                        <td>{{$row->user->phone}}</td>
+                        <td>{{$manager->user->email}}</td>
+                        <td>{{$manager->user->phone}}</td>
                         <td>
-                            <form action="{{route('managers.destroy', $row->user->id . '&' . $row->id)}}" method="POST" class="p-0">
+                            <form action="{{route('managers.destroy', $manager->user->id . '&' . $manager->id)}}" method="POST" class="p-0">
                                 @csrf
                                 @method('DELETE')
                                 <button onclick="return confirm('Are you sure to complete this operation?')" type="submit" class="btn border-none text-danger p-0">

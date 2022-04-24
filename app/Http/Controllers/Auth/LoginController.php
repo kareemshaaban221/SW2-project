@@ -62,7 +62,7 @@ class LoginController extends Controller
 
             $user = $user->first();
 
-            if( Hash::check($request->password, $user->password) ) {
+            if( Hash::check($request->password, $user->password) && $user->role ) {
 
                 Auth::login($user);
                 return redirect()->route('home');

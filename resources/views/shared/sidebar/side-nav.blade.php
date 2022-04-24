@@ -19,7 +19,7 @@
 
                 <!--end hospital -->
                 <div class="sb-sidenav-menu-heading">Core</div>
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{{ route('home') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                     Dashboard
                 </a>

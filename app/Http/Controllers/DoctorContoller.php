@@ -10,7 +10,7 @@ class DoctorContoller extends Controller
     public function index()
     {
         return view('components.doctors.alldoctors', [
-            'rows' => Doctor::with('user')->limit(10)->get(),
+            'doctors' => Doctor::with('employee')->limit(10)->get(),
             'title' => 'doctors'
         ]);
     }
@@ -21,7 +21,7 @@ class DoctorContoller extends Controller
         return view('components.doctors.adddoctor');
     }
 
-  
+
     public function store(Request $request)
     {
         $doctor=new Doctor();
@@ -70,6 +70,6 @@ class DoctorContoller extends Controller
     {
         $doctor= Doctor::find($id);
         $doctor->delete();
-        return  redirect()->back();
+        return redirect()->back();
     }
 }
