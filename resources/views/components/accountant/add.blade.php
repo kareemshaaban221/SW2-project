@@ -1,9 +1,9 @@
-@extends('layouts.form-layouts', ['title' => 'add doctor'])
+@extends('layouts.form-layouts', ['title' => 'add accountant'])
 
 @section('content')
 
 @if (Session::has('exists'))
-<form action="{{ route('store.doctor') }}" method="POST" class="d-none">
+<form action="{{ route('accountants.create') }}" method="POST" class="d-none">
     @csrf
     <input type="text" name="email" value="{{old('email')}}">
     <input type="submit" name="" id="blabla" onclick="return confirm('The Email Is Already Token! Do You Want To Add A New Manager With This Email ?!')">
@@ -17,7 +17,7 @@
 @endif
 
 <div class="card-header ">
-    <h3 class="text-center font-weight-light my-4">Add Doctor</h3>
+    <h3 class="text-center font-weight-light my-4">Add Accountant</h3>
 </div>
 <div class="card-body ">
     @if (Session::has('err'))
@@ -25,7 +25,7 @@
             {{Session::get('err')}}
         </div>
     @endif
-    <form method="POST" action="{{ route('store.doctor') }}">
+    <form method="POST" action="{{ route('accountants.store') }}">
         @csrf
         <div class="form-floating mb-3 ">
             <input class="form-control" id="inputEmail" name="email" type="text" placeholder="Email"
@@ -45,6 +45,10 @@
             <button class="btn btn-primary" type="submit">
                 <i class="fa fa-plus"></i> Add
             </button>
+
+            <a class="btn btn-outline-dark" type="submit" href="{{route('accountants.index')}}">
+                <i class="fa fa-users"></i> List Page
+            </a>
         </div>
     </form>
 </div>

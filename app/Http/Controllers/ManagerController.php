@@ -29,7 +29,7 @@ class ManagerController extends Controller
 
     public function store(Request $request)
     {
-        $this->managerCreateValidation($request);
+        $this->emailValidation($request);
 
         if($this->userExists($request->email)) {
             return redirect(route('managers.create'))->with('exists', 'yes')->withInput();
@@ -60,9 +60,9 @@ class ManagerController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->managerUpdateValidation($request);
+        $this->updateValidation($request);
 
-        $this->updateManager($request, $id);
+        UpdatingService::update($request, $id, Manager::class);
 
         return redirect(route('managers.show', User::select('username')->where('id', $id)->get()->first()->username))
             ->with('done', 'Updated!');
@@ -84,10 +84,19 @@ class ManagerController extends Controller
         return back()->with('done', 'Deleted!');
     }
 
+    /**
+     * if manager want to add two employee
+     * with the same email this method handle
+     * this case
+     *
+     * @return redirect to the previous page if
+     * the email is exists otherwise add the new
+     * user and @return redirect to the index page
+     */
     function createWithExistingEmail(Request $request) {
         $user = User::where('email', $request->email)->first();
-        if( $this->managerExists($user->id) ) {
-            return redirect(route('managers.create'))->with('err', 'This Email Has Been Already Used By Another Manager!!')->withInput();
+        if( $this->hasRole($user->id) ) {
+            return redirect(route('managers.create'))->with('err', 'This Email Has Been Already Used By Another Employee!!')->withInput();
         } else {
             $this->createManager($request, $user);
 

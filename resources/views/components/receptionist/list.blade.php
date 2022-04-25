@@ -16,7 +16,7 @@
                 {{ ucwords($title) }} Info.
             </div>
             <div class="w-auto">
-                <a href="{{route('add.doctor')}}" class="btn btn-primary p-1 pt-0 pb-0" id="add" data-toggle="tooltip" title="Add New Doctor">
+                <a href="{{route('receptionists.create')}}" class="btn btn-primary p-1 pt-0 pb-0" id="add" data-toggle="tooltip" title="Add New Receptionist">
                     <i class="fa fa-plus"></i>
                 </a>
             </div>
@@ -43,15 +43,15 @@
             </tfoot>
             <tbody>
 
-                @foreach ($doctors as $doctor)
-                    @if (!$doctor->employee->user->username)
+                @foreach ($receptionists as $receptionist)
+                    @if (!$receptionist->employee->user->username)
 
                     <tr class="bg-danger">
                         <td class="text-light">Hasn't Registered Yet!</td>
-                        <td class="text-light">{{$doctor->employee->user->email}}</td>
+                        <td class="text-light">{{$receptionist->employee->user->email}}</td>
                         <td class="text-light">Hasn't Registered Yet!</td>
                         <td class="text-light">
-                            <form action="{{route('delete.doctor', $doctor->employee->user->id . '&' . $doctor->id)}}" method="POST" class="p-0">
+                            <form action="{{route('receptionists.destroy', $receptionist->id)}}" method="POST" class="p-0">
                                 @csrf
                                 @method('DELETE')
                                 <button onclick="return confirm('Are you sure to complete this operation?')" type="submit" class="btn border-none text-light p-0">
@@ -65,17 +65,17 @@
 
                     <tr>
                         <td>
-                            <a href="{{route('show.doctor', $doctor->employee->user->username)}}" class="text-decoration-none">
-                                {{ucwords($doctor->employee->user->fname . ' ' . $doctor->employee->user->lname)}}
+                            <a href="{{route('receptionists.show', $receptionist->employee->user->username)}}" class="text-decoration-none">
+                                {{ucwords($receptionist->employee->user->fname . ' ' . $receptionist->employee->user->lname)}}
                             </a>
-                            <a href="{{route('edit.doctor', $doctor->employee->user->username)}}" class="m-2">
+                            <a href="{{route('receptionists.edit', $receptionist->employee->user->username)}}" class="m-2">
                                 <i class="fa fa-edit"></i>
                             </a>
                         </td>
-                        <td>{{$doctor->employee->user->email}}</td>
-                        <td>{{$doctor->employee->user->phone}}</td>
+                        <td>{{$receptionist->employee->user->email}}</td>
+                        <td>{{$receptionist->employee->user->phone}}</td>
                         <td>
-                            <form action="{{route('delete.doctor', $doctor->employee->user->id . '&' . $doctor->id)}}" method="POST" class="p-0">
+                            <form action="{{route('receptionists.destroy', $receptionist->id)}}" method="POST" class="p-0">
                                 @csrf
                                 @method('DELETE')
                                 <button onclick="return confirm('Are you sure to complete this operation?')" type="submit" class="btn border-none text-danger p-0">
@@ -92,8 +92,4 @@
         </table>
     </div>
 </div>
-
-<script>
-    $('#add').tooltip();
-</script>
 @endsection

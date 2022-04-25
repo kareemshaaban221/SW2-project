@@ -17,9 +17,9 @@ return new class extends Migration
 
             $table->id();
             $table->foreignId('user_id')->index()->unique();
-            $table->decimal('salary');
+            $table->decimal('salary')->nullable();
             $table->foreignId('manager_id')->index();
-            $table->string('national_id')->unique();
+            $table->string('national_id')->unique()->nullable();
             $table->timestamps();
 
         });

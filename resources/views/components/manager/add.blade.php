@@ -45,6 +45,10 @@
             <button class="btn btn-primary" type="submit">
                 <i class="fa fa-plus"></i> Add
             </button>
+
+            <a class="btn btn-outline-dark" type="submit" href="{{route('managers.index')}}">
+                <i class="fa fa-users"></i> List Page
+            </a>
         </div>
     </form>
 </div>

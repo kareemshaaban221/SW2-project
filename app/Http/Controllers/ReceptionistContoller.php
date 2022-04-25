@@ -7,26 +7,29 @@ use App\Http\Controllers\Services\Helpers;
 use App\Http\Controllers\Services\UpdatingService;
 use App\Http\Controllers\Services\ValidationService;
 use Illuminate\Http\Request;
-use App\Models\Doctor;
-use App\Models\Employee;
+use App\Models\Receptionist;
 use App\Models\User;
 
-class DoctorContoller extends Controller
+class ReceptionistContoller extends Controller
 {
-    use Helpers, ValidationService, CreatingService, UpdatingService;
-
+    use ValidationService, CreatingService, UpdatingService, Helpers;
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        return view('components.doctor.list', [
-            'doctors' => Doctor::with('employee')->limit(10)->get(),
-            'title' => 'doctors'
+        return view('components.receptionist.list', [
+            'receptionists' => Receptionist::with('employee')->limit(10)->get(),
+            'title' => 'receptionists'
         ]);
     }
 
 
     public function create()
     {
-        return view('components.doctor.add');
+        return view('components.receptionist.add');
     }
 
 
@@ -36,14 +39,14 @@ class DoctorContoller extends Controller
 
         if($user = $this->userExists($request->email)) {
             if($user->role)
-                return redirect(route('doctors.create'))
+                return redirect(route('receptionists.create'))
                     ->with('err', 'This Email Has Been Already Used By Another Employee!!')
                     ->withInput();
         }
 
-        $this->createDoctor($request, $user);
+        $this->createReceptionist($request, $user);
 
-        return redirect(route('doctors.index'))->with('done', 'Added!');
+        return redirect(route('receptionists.index'))->with('done', 'Added!');
     }
 
     /**
@@ -96,11 +99,11 @@ class DoctorContoller extends Controller
 
     public function destroy($id)
     {
-        $doctor= Doctor::find($id);
-        $employee = $doctor->employee;
+        $receptionist= Receptionist::with('employee')->find($id);
+        $employee = $receptionist->employee;
         $user = $employee->user;
 
-        $doctor->delete();
+        $receptionist->delete();
         $employee->delete();
 
         $user->role = NULL;

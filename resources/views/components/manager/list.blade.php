@@ -92,8 +92,4 @@
         </table>
     </div>
 </div>
-
-<script>
-    $('#add').tooltip();
-</script>
 @endsection

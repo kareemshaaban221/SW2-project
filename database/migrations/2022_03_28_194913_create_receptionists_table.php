@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('receptionists', function (Blueprint $table) {
             $table->id();
             $table->foreignId('employee_id')->index()->unique();
-            $table->integer('no_added_patients');
+            $table->integer('no_added_patients')->default(0);
             $table->timestamps();
         });
     }

@@ -9,7 +9,7 @@ class PatientContoller extends Controller
 
     public function index()
     {
-        return view('components.patient.allpatient', [
+        return view('components.patient.list', [
             'patients' => Patient::with('user')->limit(10)->get(),
             'title' => 'Patients'
         ]);
@@ -18,7 +18,7 @@ class PatientContoller extends Controller
 
     public function create()
     {
-        return view('components.patient.addpatient');
+        return view('components.patient.add');
     }
 
 

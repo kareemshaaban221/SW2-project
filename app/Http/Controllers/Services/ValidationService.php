@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Services;
 use Illuminate\Http\Request;
 
 trait ValidationService {
-    protected function managerUpdateValidation(Request $request) {
+    protected function updateValidation(Request $request) {
         $request->validate([
             'fname' => 'required',
             'lname' => 'required',
@@ -15,9 +15,16 @@ trait ValidationService {
         ]);
     }
 
-    protected function managerCreateValidation(Request $request) {
+    protected function emailValidation(Request $request) {
         $request->validate([
             'email' => 'required|string|max:255|email'
+        ]);
+    }
+
+    protected function employeeCreateValidation(Request $request) {
+        $request->validate([
+            'email' => 'required|string|max:255|email',
+            'manager_id' => 'required|integer|exists:managers,id'
         ]);
     }
 }

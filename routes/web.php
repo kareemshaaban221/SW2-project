@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\AccountantContoller;
+use App\Http\Controllers\DoctorContoller;
 use App\Http\Controllers\ManagerController;
+use App\Http\Controllers\PatientContoller;
+use App\Http\Controllers\ReceptionistContoller;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,35 +40,18 @@ Route::middleware('auth')->group(function () {
     ])->name('managers.create.exists');
 
     //doctor
-    Route::get('/doctor', [App\Http\Controllers\DoctorContoller::class, 'index'])->name('doctor');
+    Route::resource('/doctors', DoctorContoller::class);
+    Route::post('/doctors/create/exists', [
+        DoctorContoller::class, 'createWithExistingEmail'
+    ])->name('doctors.create.exists');
 
-    Route::get('/adddoctor', [App\Http\Controllers\DoctorContoller::class, 'create'])->name('add.doctor');
-    Route::get('/alldoctor', [App\Http\Controllers\DoctorContoller::class, 'show'])->name('show.doctor');
-    Route::post('/storedoctor', [App\Http\Controllers\DoctorContoller::class, 'store'])->name('store.doctor');
-    Route::post('/deletedoctor', [App\Http\Controllers\DoctorContoller::class, 'destroy'])->name('delete.doctor');
-    Route::post('/editdoctor', [App\Http\Controllers\DoctorContoller::class, 'edit'])->name('edit.doctor');
-
-    //assistant
-    Route::get('/assistant', [App\Http\Controllers\AssistantContoller::class, 'index'])->name('assistant');
-    Route::get('/addassistant', [App\Http\Controllers\AssistantContoller::class, 'create'])->name('add.assistant');
-    Route::get('/allassistant', [App\Http\Controllers\AssistantContoller::class, 'show'])->name('show.assistant');
-    Route::post('/storeassistant', [App\Http\Controllers\AssistantContoller::class, 'store'])->name('store.assistant');
-    Route::post('/deleteassistant', [App\Http\Controllers\AssistantContoller::class, 'destroy'])->name('delete.assistant');
-    Route::post('/editassistant', [App\Http\Controllers\AssistantContoller::class, 'edit'])->name('edit.assistant');
+    //receptionist
+    Route::resource('/receptionists', ReceptionistContoller::class);
 
     //accountant
-    Route::get('/accountant', [App\Http\Controllers\AccountantContoller::class, 'index'])->name('accountant');
-    Route::get('/addaccountant', [App\Http\Controllers\AccountantContoller::class, 'create'])->name('add.accountant');
-    Route::get('/allaccountant', [App\Http\Controllers\AccountantContoller::class, 'show'])->name('show.accountant');
-    Route::post('/storeaccountant', [App\Http\Controllers\AccountantContoller::class, 'store'])->name('store.accountant');
-    Route::post('/deleteaccountant', [App\Http\Controllers\AccountantContoller::class, 'destroy'])->name('delete.accountant');
-    Route::post('/editaccountant', [App\Http\Controllers\AccountantContoller::class, 'edit'])->name('edit.accountant');
+    Route::resource('/accountants', AccountantContoller::class);
 
     //patient
-    Route::get('/patient', [App\Http\Controllers\PatientContoller::class, 'index'])->name('patient');
-    Route::get('/addpatient', [App\Http\Controllers\PatientContoller::class, 'create'])->name('add.patient');
-    Route::get('/allpatient', [App\Http\Controllers\PatientContoller::class, 'show'])->name('show.patient');
-    Route::post('/storepatient', [App\Http\Controllers\PatientContoller::class, 'store'])->name('store.patient');
-    Route::post('/deletepatient', [App\Http\Controllers\PatientContoller::class, 'destroy'])->name('delete.patient');
-    Route::post('/editpatient', [App\Http\Controllers\PatientContoller::class, 'edit'])->name('edit.patient');
+    Route::resource('/patients', PatientContoller::class);
+
 });

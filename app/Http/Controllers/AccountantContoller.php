@@ -9,8 +9,8 @@ class AccountantContoller extends Controller
 
     public function index()
     {
-        return view('components.accountant.allaccountants', [
-            'accoutants' => Accountant::with('employee')->limit(10)->get(),
+        return view('components.accountant.list', [
+            'accountants' => Accountant::with('employee')->limit(10)->get(),
             'title' => 'Accountants'
         ]);
     }
@@ -18,7 +18,7 @@ class AccountantContoller extends Controller
 
     public function create()
     {
-        return view('components.accountant.addaccountant');
+        return view('components.accountant.add');
     }
 
 
