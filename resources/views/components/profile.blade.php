@@ -46,16 +46,18 @@
                 <div class="col-5 overflow-auto" style="height: 25px; text-align: left;">{{$user->address}}</div>
             </div>
 
-            <hr class="w-50 m-auto">
-            <div class="row mb-3 mt-3 justify-content-around">
-                <div class="col-5 text-primary" style="font-weight: bold; text-align: right;">National ID</div>
-                <div class="col-5 overflow-auto" style="height: 25px; text-align: left;">{{$employee->national_id}}</div>
-            </div>
-            <hr class="w-50 m-auto">
-            <div class="row mb-3 mt-3 justify-content-around">
-                <div class="col-5 text-primary" style="font-weight: bold; text-align: right;">Salary</div>
-                <div class="col-5 overflow-auto" style="height: 25px; text-align: left;">{{$employee->salary ? $employee->salary : 'No Salary Specified'}}</div>
-            </div>
+            @if ($user->role != 'patient')
+                <hr class="w-50 m-auto">
+                <div class="row mb-3 mt-3 justify-content-around">
+                    <div class="col-5 text-primary" style="font-weight: bold; text-align: right;">National ID</div>
+                    <div class="col-5 overflow-auto" style="height: 25px; text-align: left;">{{$employee->national_id}}</div>
+                </div>
+                <hr class="w-50 m-auto">
+                <div class="row mb-3 mt-3 justify-content-around">
+                    <div class="col-5 text-primary" style="font-weight: bold; text-align: right;">Salary</div>
+                    <div class="col-5 overflow-auto" style="height: 25px; text-align: left;">{{$employee->salary ? $employee->salary : 'No Salary Specified'}}</div>
+                </div>
+            @endif
 
             @yield('profile')
 

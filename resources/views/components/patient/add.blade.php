@@ -2,20 +2,6 @@
 
 @section('content')
 
-@if (Session::has('exists'))
-<form action="{{ route('patients.create') }}" method="POST" class="d-none">
-    @csrf
-    <input type="text" name="email" value="{{old('email')}}">
-    <input type="submit" name="" id="blabla" onclick="return confirm('The Email Is Already Token! Do You Want To Add A New Manager With This Email ?!')">
-</form>
-
-<script>
-    $(document).ready(() => {
-        document.getElementById('blabla').click()
-    })
-</script>
-@endif
-
 <div class="card-header ">
     <h3 class="text-center font-weight-light my-4">Add Patient</h3>
 </div>
@@ -27,6 +13,39 @@
     @endif
     <form method="POST" action="{{ route('patients.store') }}">
         @csrf
+        <div class="row justify-content-between">
+            <div class="col-md-6 col-12">
+                <div class="form-floating mb-3 ">
+                    <input class="form-control" id="inputFname" name="fname" type="text" placeholder="Frist Name"
+                        value="{{old('fname')}}" />
+                    <label for="inputFname">Frist Name</label>
+
+                    @error('fname')
+                    <small class="text-danger">* {{$message}}</small>
+                    <script>
+                        $('#inputFname').addClass('is-invalid').removeClass('is-valid')
+
+                    </script>
+                    @enderror
+                </div>
+            </div>
+            <div class="col-md-6 col-12">
+                <div class="form-floating mb-3 ">
+                    <input class="form-control" id="inputLname" name="lname" type="text" placeholder="Last Name"
+                        value="{{old('lname')}}" />
+                    <label for="inputLname">Last Name</label>
+
+                    @error('lname')
+                    <small class="text-danger">* {{$message}}</small>
+                    <script>
+                        $('#inputLname').addClass('is-invalid').removeClass('is-valid')
+
+                    </script>
+                    @enderror
+                </div>
+            </div>
+        </div>
+
         <div class="form-floating mb-3 ">
             <input class="form-control" id="inputEmail" name="email" type="text" placeholder="Email"
                 value="{{old('email')}}" />
@@ -36,7 +55,49 @@
             <small class="text-danger">* {{$message}}</small>
             <script>
                 $('#inputEmail').addClass('is-invalid').removeClass('is-valid')
+            </script>
+            @enderror
+        </div>
 
+        <div class="form-floating mb-3 ">
+            <input class="form-control" id="inputPhone" name="phone" type="text" placeholder="Phone"
+                value="{{old('phone')}}" />
+            <label for="inputPhone">Phone</label>
+
+            @error('phone')
+            <small class="text-danger">* {{$message}}</small>
+            <script>
+                $('#inputPhone').addClass('is-invalid').removeClass('is-valid')
+            </script>
+            @enderror
+        </div>
+
+        <div class="form-floating mb-3 ">
+            <input class="form-control" id="inputAddress" name="address" type="text" placeholder="Address"
+                value="{{old('address')}}" />
+            <label for="inputPhone">Address</label>
+
+            @error('address')
+            <small class="text-danger">* {{$message}}</small>
+            <script>
+                $('#inputPhone').addClass('is-invalid').removeClass('is-valid')
+            </script>
+            @enderror
+        </div>
+
+        <div class="form-floating mb-3 ">
+            <select class="form-control" name="clinic" id="inputClinic">
+                <option value="">-- Choose Clinic --</option>
+                @foreach (\App\Models\Clinic::all() as $clinic)
+                    <option value="{{$clinic->id}}">{{$clinic->name}}</option>
+                @endforeach
+            </select>
+            <label for="inputClinic">Clinic</label>
+
+            @error('clinic')
+            <small class="text-danger">* {{$message}}</small>
+            <script>
+                $('#inputClinic').addClass('is-invalid').removeClass('is-valid')
             </script>
             @enderror
         </div>

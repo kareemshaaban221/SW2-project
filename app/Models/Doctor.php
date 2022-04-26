@@ -12,4 +12,8 @@ class Doctor extends Model
     function employee() {
         return $this->belongsTo(Employee::class);
     }
+
+    function clinic() {
+        return $this->belongsTo(Clinic::class);
+    }
 }

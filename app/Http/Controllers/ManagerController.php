@@ -44,6 +44,10 @@ class ManagerController extends Controller
     {
         $user = User::with('manager')->where('username', $username)->get()->first();
 
+        if(!$user || $user->role != 'manager') {
+            return abort(404);
+        }
+
         return view('components.manager.profile', [
             'user' => $user
         ]);
@@ -52,6 +56,10 @@ class ManagerController extends Controller
     public function edit($username)
     {
         $user = User::with('manager')->where('username', $username)->get()->first();
+
+        if(!$user || $user->role != 'manager') {
+            return abort(404);
+        }
 
         return view('components.manager.edit', [
             'user' => $user

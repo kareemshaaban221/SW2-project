@@ -6,6 +6,7 @@ use App\Http\Controllers\Services\CreatingService;
 use App\Http\Controllers\Services\Helpers;
 use App\Http\Controllers\Services\UpdatingService;
 use App\Http\Controllers\Services\ValidationService;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Models\Receptionist;
 use App\Models\User;
@@ -44,7 +45,7 @@ class ReceptionistContoller extends Controller
                     ->withInput();
         }
 
-        $this->createReceptionist($request, $user);
+        $this->createStaff($request, $user, Receptionist::class, 'receptionist');
 
         return redirect(route('receptionists.index'))->with('done', 'Added!');
     }
@@ -59,7 +60,11 @@ class ReceptionistContoller extends Controller
     {
         $user = User::with('employee')->where('username', $username)->get()->first();
 
-        return view('components.doctor.profile', [
+        if(!$user || $user->role != 'receptionist') {
+            return abort(404);
+        }
+
+        return view('components.receptionist.profile', [
             'user' => $user
         ]);
     }
@@ -74,7 +79,11 @@ class ReceptionistContoller extends Controller
     {
         $user = User::with('employee')->where('username', $username)->get()->first();
 
-        return view('components.doctor.edit', [
+        if(!$user || $user->role != 'receptionist') {
+            return abort(404);
+        }
+
+        return view('components.receptionist.edit', [
             'user' => $user
         ]);
     }
@@ -92,22 +101,14 @@ class ReceptionistContoller extends Controller
 
         UpdatingService::update($request, $id, Employee::class);
 
-        return redirect(route('doctors.show', User::select('username')->where('id', $id)->get()->first()->username))
+        return redirect(route('receptionists.show', User::select('username')->where('id', $id)->get()->first()->username))
             ->with('done', 'Updated!');
     }
 
 
     public function destroy($id)
     {
-        $receptionist= Receptionist::with('employee')->find($id);
-        $employee = $receptionist->employee;
-        $user = $employee->user;
-
-        $receptionist->delete();
-        $employee->delete();
-
-        $user->role = NULL;
-        $user->save();
+        $this->deleteEmployee( Receptionist::with('employee')->find($id) );
 
         return back()->with('done', 'Deleted!');
     }

@@ -41,7 +41,7 @@ class DoctorContoller extends Controller
                     ->withInput();
         }
 
-        $this->createDoctor($request, $user);
+        $this->createStaff($request, $user, Doctor::class, 'doctor');
 
         return redirect(route('doctors.index'))->with('done', 'Added!');
     }
@@ -55,6 +55,10 @@ class DoctorContoller extends Controller
     public function show($username)
     {
         $user = User::with('employee')->where('username', $username)->get()->first();
+
+        if(!$user || $user->role != 'doctor') {
+            return abort(404);
+        }
 
         return view('components.doctor.profile', [
             'user' => $user
@@ -70,6 +74,10 @@ class DoctorContoller extends Controller
     public function edit($username)
     {
         $user = User::with('employee')->where('username', $username)->get()->first();
+
+        if(!$user || $user->role != 'doctor') {
+            return abort(404);
+        }
 
         return view('components.doctor.edit', [
             'user' => $user
@@ -96,15 +104,7 @@ class DoctorContoller extends Controller
 
     public function destroy($id)
     {
-        $doctor= Doctor::find($id);
-        $employee = $doctor->employee;
-        $user = $employee->user;
-
-        $doctor->delete();
-        $employee->delete();
-
-        $user->role = NULL;
-        $user->save();
+        $this->deleteEmployee( Doctor::with('employee')->find($id) );
 
         return back()->with('done', 'Deleted!');
     }

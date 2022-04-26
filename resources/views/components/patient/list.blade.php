@@ -51,7 +51,7 @@
                         <td class="text-light">{{$patient->user->email}}</td>
                         <td class="text-light">Hasn't Registered Yet!</td>
                         <td class="text-light">
-                            <form action="{{route('patients.destroy', $patient->user->id . '&' . $patient->id)}}" method="POST" class="p-0">
+                            <form action="{{route('patients.destroy', $patient->user->id)}}" method="POST" class="p-0">
                                 @csrf
                                 @method('DELETE')
                                 <button onclick="return confirm('Are you sure to complete this operation?')" type="submit" class="btn border-none text-light p-0">
@@ -75,7 +75,7 @@
                         <td>{{$patient->user->email}}</td>
                         <td>{{$patient->user->phone}}</td>
                         <td>
-                            <form action="{{route('patients.destroy', $patient->user->id . '&' . $patient->id)}}" method="POST" class="p-0">
+                            <form action="{{route('patients.destroy', $patient->user->id)}}" method="POST" class="p-0">
                                 @csrf
                                 @method('DELETE')
                                 <button onclick="return confirm('Are you sure to complete this operation?')" type="submit" class="btn border-none text-danger p-0">

@@ -22,4 +22,32 @@ Trait Helpers {
     protected function hasRole($user_id) {
         return User::find($user_id)->role;
     }
+
+    protected function setRole($user, $role) {
+        if(!$user) return false;
+
+        $user->role = $role;
+        $user->save();
+        return true;
+    }
+
+    protected function deleteEmployee($emp) {
+        $emp->delete(); // first table doctors, managers, recep...
+
+        $emp = $emp->employee;
+        $user = $emp->user;
+
+        $emp->delete();
+
+        $emp->user->role = NULL;
+        $user->save();
+    }
+
+    protected function deletePatient($user) {
+        $user->patient->delete();
+
+        $user->role = NULL;
+
+        $user->save();
+    }
 }

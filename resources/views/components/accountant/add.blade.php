@@ -2,20 +2,6 @@
 
 @section('content')
 
-@if (Session::has('exists'))
-<form action="{{ route('accountants.create') }}" method="POST" class="d-none">
-    @csrf
-    <input type="text" name="email" value="{{old('email')}}">
-    <input type="submit" name="" id="blabla" onclick="return confirm('The Email Is Already Token! Do You Want To Add A New Manager With This Email ?!')">
-</form>
-
-<script>
-    $(document).ready(() => {
-        document.getElementById('blabla').click()
-    })
-</script>
-@endif
-
 <div class="card-header ">
     <h3 class="text-center font-weight-light my-4">Add Accountant</h3>
 </div>
@@ -37,6 +23,23 @@
             <script>
                 $('#inputEmail').addClass('is-invalid').removeClass('is-valid')
 
+            </script>
+            @enderror
+        </div>
+
+        <div class="form-floating mb-3 ">
+            <select class="form-control" name="manager_id" id="inputManager" placeholder="Manager">
+                <option>-- Choose Manager --</option>
+                @foreach (App\Models\Manager::with('user')->get() as $manager)
+                    <option value="{{$manager->id}}">{{$manager->user->fname}} | {{$manager->user->username}}</option>
+                @endforeach
+            </select>
+            <label for="inputEmail">Manager</label>
+
+            @error('manager_id')
+            <small class="text-danger">* {{$message}}</small>
+            <script>
+                $('#inputManager').addClass('is-invalid').removeClass('is-valid')
             </script>
             @enderror
         </div>

@@ -55,4 +55,8 @@ class User extends Authenticatable
     public function manager() {
         return $this->hasOne(Manager::class);
     }
+
+    public function patient() {
+        return $this->hasOne(Patient::class);
+    }
 }

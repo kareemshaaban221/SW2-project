@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('username')->unique()->nullable();
             $table->string('phone')->nullable();
             $table->text('address')->nullable();
-            $table->enum('role', ['manager', 'doctor', 'receptionist', 'accountant'])->nullable();
+            $table->enum('role', ['manager', 'doctor', 'receptionist', 'accountant', 'patient'])->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

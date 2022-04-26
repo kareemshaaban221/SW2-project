@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->index()->unique();
+            $table->foreignId('user_id')->index();
             $table->foreignId('doctor_id')->index();
-            $table->enum('status', ['Healthy', 'Good', 'Need diagnosis', 'Late state']);
+            $table->enum('status', ['Healthy', 'Good', 'Need diagnosis', 'Late state'])->nullable();
             $table->timestamps();
         });
     }
