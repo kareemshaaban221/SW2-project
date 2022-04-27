@@ -39,4 +39,27 @@ trait UpdatingService {
             'doctor_id' => Doctor::inRandomOrder()->where('clinic_id', $request->clinic)->first()->id
         ]);
     }
+
+    protected function setUserData(Request $request, User $user) {
+        $user->fname = ucwords($request->fname);
+        $user->lname = ucwords($request->lname);
+        $user->username = $request->username;
+        $user->password = bcrypt($request->password);
+        $user->phone = $request->phone;
+        $user->address = $request->address;
+
+        if($user->role == 'manager') {
+            $user->manager->update([
+                'national_id' => $request->national_id,
+            ]);
+        } else {
+            $user->employee->update([
+                'national_id' => $request->national_id,
+            ]);
+        }
+
+        $user->save();
+
+        return $user;
+    }
 }

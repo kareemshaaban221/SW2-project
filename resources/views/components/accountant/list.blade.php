@@ -44,6 +44,10 @@
             <tbody>
 
                 @foreach ($accountants as $accountant)
+                    @if ($accountant->employee->user->id == Auth::user()->id)
+                        @continue
+                    @endif
+
                     @if (!$accountant->employee->user->username)
 
                     <tr class="bg-danger">

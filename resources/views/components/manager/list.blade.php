@@ -44,6 +44,10 @@
             <tbody>
 
                 @foreach ($managers as $manager)
+                    @if ($manager->user->id == Auth::user()->id)
+                        @continue
+                    @endif
+
                     @if (!$manager->user->username)
 
                     <tr class="bg-danger">

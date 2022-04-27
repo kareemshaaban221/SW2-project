@@ -104,9 +104,15 @@
         @endif
 
         <div class="form-floating mb-3 ">
-            <input class="form-control" id="inputPhone" name="phone" type="text" placeholder="Phone"
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">+2</div>
+                </div>
+                <input class="form-control" id="inputPhone" name="phone" type="text" placeholder="Phone"
                 value="{{old('phone') ? old('phone') : $user->phone}}" />
-            <label for="inputPhone">Phone</label>
+
+                {{-- <label for="inputPhone">Phone</label> --}}
+            </div>
 
             @error('phone')
                 <small class="text-danger">* {{$message}}</small>

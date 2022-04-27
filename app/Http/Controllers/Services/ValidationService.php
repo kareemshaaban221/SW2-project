@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Services;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 trait ValidationService {
     protected function updateValidation(Request $request) {
@@ -47,5 +49,24 @@ trait ValidationService {
             'phone' => 'required|digits:11|starts_with:011,010,015,012',
             'clinic' => 'required|exists:clinics,id',
         ]);
+    }
+
+    protected function validateRegister(Request $request, User $user) {
+        $validator = Validator::make($request->all(), [
+            'fname' => 'required|string|max:255',
+            'lname' => 'required|string|max:255',
+            'username' => 'required|string|max:255|min:6|alpha_num|unique:users,username',
+            'address' => 'required|string|max:255',
+            'phone' => 'required|digits:11|starts_with:011,010,015,012',
+            'national_id' => 'required|digits:14',
+            'password' => 'required|confirmed|string|max:255|min:8',
+        ]);
+
+        if($validator->fails()) {
+            return back()
+                ->with('user', $user)
+                ->withErrors($validator)
+                ->withInput();
+        }
     }
 }

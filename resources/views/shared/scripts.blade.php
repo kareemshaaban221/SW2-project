@@ -15,7 +15,6 @@
 <script src="{{ asset('assets/demo/chart-area-demo.js') }}"></script>
 <script src="{{ asset('assets/demo/chart-bar-demo.js') }}"></script>
 
-{{-- show password btn --}}
 <script>
     $(document).ready( () => {
         $('.showPassBtn').each((i, elem) => {

@@ -62,13 +62,15 @@ class LoginController extends Controller
 
             $user = $user->first();
 
-            if( Hash::check($request->password, $user->password) && $user->role ) {
+            if($user->password) {
+                if( Hash::check($request->password, $user->password) && $user->role ) {
 
-                Auth::login($user);
-                return redirect()->route('home');
-            }
+                    Auth::login($user);
+                    return redirect()->route('home');
+                }
 
-            $err = 'Wrong password, please try again!';
+                $err = 'Wrong password, please try again!';
+            } else $err = 'Your Register Process Hasn\'t Completed Yet!';
         }
 
         return back()->with('err', $err)->withInput();

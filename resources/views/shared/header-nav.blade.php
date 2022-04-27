@@ -22,8 +22,7 @@
                 <span>{{Auth::user()->username}}</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#!">Settings</a></li>
-                <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                <li><a class="dropdown-item" href="{{route(Auth::user()->role.'s.show', Auth::user()->username)}}">Profile</a></li>
                 <li><hr class="dropdown-divider" /></li>
                 <li>
                     <form method="POST" action="{{ route('logout') }}">

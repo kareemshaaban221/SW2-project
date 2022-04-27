@@ -44,6 +44,10 @@
             <tbody>
 
                 @foreach ($receptionists as $receptionist)
+                    @if ($receptionist->employee->user->id == Auth::user()->id)
+                        @continue
+                    @endif
+
                     @if (!$receptionist->employee->user->username)
 
                     <tr class="bg-danger">

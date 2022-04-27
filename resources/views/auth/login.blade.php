@@ -40,13 +40,14 @@
             <input class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />
             <label class="form-check-label" for="inputRememberPassword">Remember Password</label>
         </div> --}}
-        <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+        <div class="d-flex align-items-center mt-4 mb-0">
             @if (Route::has('password.request'))
                 <a class="btn btn-link" href="{{ route('password.request') }}">
                     Forgot Password?
                 </a>
             @endif
-            <button class="btn btn-primary btn-block col-12" type="submit">Login</button>
+            <button class="btn btn-primary btn-block" type="submit">Login</button>
+            <a class="btn btn-link" href="{{ route('register') }}">Your First Login?</a>
         </div>
     </form>
 </div>

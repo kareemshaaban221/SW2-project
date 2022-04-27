@@ -44,6 +44,10 @@
             <tbody>
 
                 @foreach ($doctors as $doctor)
+                    @if ($doctor->employee->user->id == Auth::user()->id)
+                        @continue
+                    @endif
+
                     @if (!$doctor->employee->user->username)
 
                     <tr class="bg-danger">
