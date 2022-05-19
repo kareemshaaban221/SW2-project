@@ -15,3 +15,9 @@ git clone -b backend-admin https://github.com/Farag-dev/SW-projet.git
 - Open your `.env` file and change the database name (DB_DATABASE) to `hospital_system`
 
 - Run on cmd or terminal `php artisan key:generate`
+
+- Create a database called `hospital_system`
+
+- Run on cmd or terminal `php artisan migrate`
+
+- Run on cmd or terminal `php artisan db:seed`
