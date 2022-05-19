@@ -15,7 +15,7 @@ trait CreatingService {
     use Helpers;
 
     protected function createManager(Request $request, User $user = NULL) {
-        $this->setRole($user, 'manager') ? : $this->createUser($request->email, 'manager');
+        $user = $this->setRole($user, 'manager') ? : $this->createUser($request->email, 'manager');
 
         $manager = new Manager();
         $manager->user_id = $user->id;
@@ -28,7 +28,7 @@ trait CreatingService {
     }
 
     protected function createStaff(Request $request, User $user = NULL, $model, $type) {
-        $this->setRole($user, $type) ? : $this->createUser($request->email, $type);
+        $user = $this->setRole($user, $type) ? : $this->createUser($request->email, $type);
 
         $employee = $this->createEmployee($user, Manager::find($request->manager_id));
 
@@ -69,6 +69,17 @@ trait CreatingService {
             'user' => $user,
             'patient' => $patient
         ];
+    }
+
+    protected function createReport(Request $request) {
+        $patient = Patient::find($request->patient_id);
+
+        $patient->status = $request->status;
+        $patient->report = $request->report;
+
+        $patient->save();
+
+        return $patient;
     }
 
     private function createEmployee(User $user, Manager $manager) {

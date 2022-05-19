@@ -50,4 +50,8 @@ Trait Helpers {
 
         $user->save();
     }
+
+    protected function readableNumbers($number) {
+        return round($number/1000, 1);
+    }
 }

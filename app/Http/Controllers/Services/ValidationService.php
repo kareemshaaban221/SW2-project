@@ -63,10 +63,24 @@ trait ValidationService {
         ]);
 
         if($validator->fails()) {
-            return back()
-                ->with('user', $user)
-                ->withErrors($validator)
-                ->withInput();
+            return $validator;
         }
+
+        return NULL;
+    }
+
+    protected function reportCreateValidation(Request $request) {
+        $request->validate([
+            'patient_id' => 'required|exists:patients,id',
+            'status' => 'required|in:Healthy,Good,Need diagnosis,Late state',
+            'report' => 'required|string'
+        ]);
+    }
+
+    protected function salaryChangeValidation(Request $request) {
+        $request->validate([
+            'employee_id' => 'required|exists:employees,id',
+            'salary' => 'required|numeric|max:50000|min:1000'
+        ]);
     }
 }

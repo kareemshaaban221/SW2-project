@@ -40,6 +40,15 @@ trait UpdatingService {
         ]);
     }
 
+    public static function updateSalary(Request $request) {
+        $employee = Employee::find($request->employee_id);
+        $employee->salary = $request->salary;
+
+        $employee->save();
+
+        return $employee;
+    }
+
     protected function setUserData(Request $request, User $user) {
         $user->fname = ucwords($request->fname);
         $user->lname = ucwords($request->lname);

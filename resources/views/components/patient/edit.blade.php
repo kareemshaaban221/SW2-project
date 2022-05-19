@@ -1,4 +1,4 @@
-@extends('components.edit', ['employee' => NULL])
+@extends('components.edit', ['employee' => 'patient'])
 
 @section('edit')
 <div class="form-floating mb-3 ">

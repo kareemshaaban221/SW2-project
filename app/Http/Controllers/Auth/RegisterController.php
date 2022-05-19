@@ -46,7 +46,12 @@ class RegisterController extends Controller
     public function register2(Request $request, $id) {
         $user = User::find($id);
 
-        $this->validateRegister($request, $user);
+        if($validator = $this->validateRegister($request, $user)) {
+            return back()
+                ->with('user', $user)
+                ->withErrors($validator)
+                ->withInput();
+        }
 
         $this->setUserData($request, $user);
 

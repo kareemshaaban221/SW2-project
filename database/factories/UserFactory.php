@@ -17,26 +17,17 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $roles = ['manager', 'receptionist', 'doctor', 'patient', 'accountant'];
         return [
-            'name' => $this->faker->name(),
+            'fname' => $this->faker->firstName(),
+            'lname' => $this->faker->lastName(),
             'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => bcrypt('123456789'), // password
             'remember_token' => Str::random(10),
+            'username' => $this->faker->unique()->userName(),
+            'phone' => $this->faker->regexify('01[0125][0-9]{8}'),
+            'address' => $this->faker->text(),
+            'role' => $roles[intval(rand(0, 4))]
         ];
-    }
-
-    /**
-     * Indicate that the model's email address should be unverified.
-     *
-     * @return static
-     */
-    public function unverified()
-    {
-        return $this->state(function (array $attributes) {
-            return [
-                'email_verified_at' => null,
-            ];
-        });
     }
 }

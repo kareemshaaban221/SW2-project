@@ -28,7 +28,7 @@ Route::post('login', 'App\Http\Controllers\Auth\LoginController@login')->name('l
 Route::get('register', 'App\Http\Controllers\Auth\RegisterController@showRegisterForm')->name('register');
 Route::post('register', 'App\Http\Controllers\Auth\RegisterController@register')->name('register');
 
-Route::get('register2', 'App\Http\Controllers\Auth\RegisterController@showRegisterForm2')->name('register2');
+Route::get('register2', 'App\Http\Controllers\Auth\RegisterController@showRegisterForm2')->name('register2.form');
 Route::post('register2/{id}', 'App\Http\Controllers\Auth\RegisterController@register2')->name('register2');
 
 // here our routes
@@ -59,5 +59,14 @@ Route::middleware('auth')->group(function () {
 
     //patient
     Route::resource('/patients', PatientContoller::class);
+
+    //report
+    Route::get('/report/create', 'App\Http\Controllers\ReportController@create')->name('reports.create');
+    Route::post('/report', 'App\Http\Controllers\ReportController@store')->name('reports.store');
+    Route::get('/report', 'App\Http\Controllers\ReportController@index')->name('reports.index');
+
+    //salary
+    Route::get('/salary/change', 'App\Http\Controllers\SalaryController@change')->name('salaries.change');
+    Route::post('/salary', 'App\Http\Controllers\SalaryController@store')->name('salaries.store');
 
 });

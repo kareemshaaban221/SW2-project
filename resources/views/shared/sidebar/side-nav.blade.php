@@ -5,17 +5,23 @@
                 <!-- hospital -->
                 <div class="sb-sidenav-menu-heading">Hospital</div>
 
-                {{-- @if (Auth::user()->role == 'manager') --}}
+                @if (Auth::user()->role == 'manager')
                     @include('shared.sidebar.links.manager')
-                {{-- @endif --}}
+                    @include('shared.sidebar.links.patient')
+                @endif
 
-                {{-- @if (Auth::user()->role == 'doctor') --}}
-                    @include('shared.sidebar.links.doctor')
-                {{-- @endif --}}
+                @if (Auth::user()->role == 'assistant')
+                    @include('shared.sidebar.links.patient')
+                @endif
 
-                {{-- @if (Auth::user()->role == 'assistant') --}}
-                    @include('shared.sidebar.links.assistant')
-                {{-- @endif --}}
+                @if (Auth::user()->role == 'accountant')
+                    @include('shared.sidebar.links.change-salary')
+                @endif
+
+                @if (Auth::user()->role == 'doctor')
+                    @include('shared.sidebar.links.medical-report')
+                    @include('shared.sidebar.links.patient')
+                @endif
 
                 <!--end hospital -->
                 <div class="sb-sidenav-menu-heading">Core</div>
@@ -23,14 +29,14 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                     Dashboard
                 </a>
-                <!-- interface -->
+                {{-- <!-- interface -->
                 <div class="sb-sidenav-menu-heading">Interface</div>
 
                 <a class="nav-link" href="index.html">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Quick Access
                 </a>
-                <!-- end interface -->
+                <!-- end interface --> --}}
 
             </div>
         </div>

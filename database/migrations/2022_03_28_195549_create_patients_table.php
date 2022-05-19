@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->index();
             $table->foreignId('doctor_id')->index();
             $table->enum('status', ['Healthy', 'Good', 'Need diagnosis', 'Late state'])->nullable();
+            $table->string('report')->nullable();
             $table->timestamps();
         });
     }

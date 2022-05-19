@@ -67,9 +67,10 @@ class PatientContoller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($username)
+    public function show($identifier)
     {
-        $user = User::with('patient')->where('username', $username)->get()->first();
+        if(intval($identifier))   $user = User::with('patient')->where('id', $identifier)->get()->first();
+        else    $user = User::with('patient')->where('username', $identifier)->get()->first();
 
         if(!$user || $user->role != 'patient') {
             return abort(404);
@@ -86,9 +87,10 @@ class PatientContoller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($username)
+    public function edit($identifier)
     {
-        $user = User::with('patient')->where('username', $username)->get()->first();
+        if(intval($identifier))   $user = User::with('patient')->where('id', $identifier)->get()->first();
+        else    $user = User::with('patient')->where('username', $identifier)->get()->first();
 
         if(!$user || $user->role != 'patient') {
             return abort(404);

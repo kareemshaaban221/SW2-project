@@ -12,8 +12,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 
 {{-- charts handle --}}
-<script src="{{ asset('assets/demo/chart-area-demo.js') }}"></script>
-<script src="{{ asset('assets/demo/chart-bar-demo.js') }}"></script>
+@if(URL::current() == 'http://127.0.0.1:8000/home')
+    <script>
+        var dataGraph = [{{$dataGraph[0] . ',' . $dataGraph[1] . ',' . $dataGraph[2]}}];
+    </script>
+    <script src="{{ asset('assets/demo/chart-bar-demo.js') }}"></script>
+@endif
 
 <script>
     $(document).ready( () => {

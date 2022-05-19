@@ -23,12 +23,12 @@
             <hr class="w-50 m-auto">
             <div class="row mb-3 mt-3 justify-content-around">
                 <div class="col-5 text-primary" style="font-weight: bold; text-align: right;">First Name</div>
-                <div class="col-5 overflow-auto" style="height: 25px; text-align: left;">{{$user->fname}}</div>
+                <div class="col-5 overflow-auto" style="height: 25px; text-align: left;">{{ucwords($user->fname)}}</div>
             </div>
             <hr class="w-50 m-auto">
             <div class="row mb-3 mt-3 justify-content-around">
                 <div class="col-5 text-primary" style="font-weight: bold; text-align: right;">Last Name</div>
-                <div class="col-5 overflow-auto" style="height: 25px; text-align: left;">{{$user->lname}}</div>
+                <div class="col-5 overflow-auto" style="height: 25px; text-align: left;">{{ucwords($user->lname)}}</div>
             </div>
             <hr class="w-50 m-auto">
             <div class="row mb-3 mt-3 justify-content-around">
@@ -56,6 +56,39 @@
                 <div class="row mb-3 mt-3 justify-content-around">
                     <div class="col-5 text-primary" style="font-weight: bold; text-align: right;">Salary</div>
                     <div class="col-5 overflow-auto" style="height: 25px; text-align: left;">{{$employee->salary ? $employee->salary : 'No Salary Specified'}}</div>
+                </div>
+
+            @else
+                <hr class="w-50 m-auto">
+                <div class="row mb-3 mt-3 justify-content-around">
+                    <div class="col-5 text-primary" style="font-weight: bold; text-align: right;">Clinic</div>
+                    <div class="col-5 overflow-auto" style="height: 25px; text-align: left;">{{ucwords($patient->doctor->clinic->name)}}</div>
+                </div>
+                <hr class="w-50 m-auto">
+                <div class="row mb-3 mt-3 justify-content-around">
+                    <div class="col-5 text-primary" style="font-weight: bold; text-align: right;">Doctor In Charge</div>
+                    <div class="col-5 overflow-auto" style="height: 25px; text-align: left;">
+                        <a class="text-decoration-none" href="{{route('doctors.show', $patient->doctor->employee->user->username)}}">
+                            {{ucwords($patient->doctor->employee->user->fname)}}
+                        </a>
+                    </div>
+                </div>
+                <hr class="w-50 m-auto">
+                <div class="row mb-3 mt-3 justify-content-around">
+                    <div class="col-5 text-primary" style="font-weight: bold; text-align: right;">Status</div>
+                    <div class="col-5 overflow-auto" style="height: 25px; text-align: left;">
+                        @if ($patient->status)
+                            @if ($patient->status == 'Late state')
+                                <span class="badge bg-danger">{{$patient->status}}</span>
+                            @elseif ($patient->status == 'Need diagnosis')
+                                <span class="badge bg-warning">{{$patient->status}}</span>
+                            @else
+                                <span class="badge bg-success">{{$patient->status}}</span>
+                            @endif
+                        @else
+                            Not Set Yet!
+                        @endif
+                    </div>
                 </div>
             @endif
 

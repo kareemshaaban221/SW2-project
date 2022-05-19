@@ -24,4 +24,8 @@ class Patient extends Model
     function doctor() {
         return $this->belongsTo(Doctor::class);
     }
+
+    public static function getStatuses() {
+        return [ 'Healthy', 'Good', 'Need diagnosis', 'Late state' ];
+    }
 }

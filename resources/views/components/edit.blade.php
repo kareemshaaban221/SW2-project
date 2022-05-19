@@ -54,7 +54,7 @@
             </div>
         </div>
 
-        @if ($employee)
+        @if ($employee != 'patient')
 
         <div class="form-floating mb-3 ">
             <input class="form-control" id="inputNationalID" name="national_id" type="text" placeholder="National ID"
@@ -128,7 +128,7 @@
                     value="{{$user->manager->salary ? $user->manager->salary : 'Not Specified'}}" />
                 <label for="inputSalary">Salary</label>
             </div>
-        @elseif ($employee)
+        @elseif ($employee != 'patient')
             <div class="form-floating mb-3 ">
                 <input class="form-control" id="inputSalary" disabled type="text" placeholder="Salary"
                     value="{{$user->employee->salary ? $user->employee->salary : 'Not Specified'}}" />
@@ -139,7 +139,7 @@
         @yield('edit')
 
         <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-            <a class="btn btn-outline-dark col-lg-2 col-md-2" href="{{route("{$employee}s.show", $user->username)}}">
+            <a class="btn btn-outline-dark col-lg-2 col-md-2" href="{{route("{$employee}s.show", $user->username ? $user->username : $user->id)}}">
                 <i class="fa fa-user"></i>
                 Profile
             </a>
