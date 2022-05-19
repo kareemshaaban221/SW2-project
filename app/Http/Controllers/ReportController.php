@@ -12,6 +12,11 @@ class ReportController extends Controller
 {
     use ValidationService, CreatingService;
 
+    public function __construct()
+    {
+        $this->middleware('isDoctor');
+    }
+
     public function index() {
         $doc_id = Auth::user()->employee->doctor->id;
 

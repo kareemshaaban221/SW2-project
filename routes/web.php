@@ -69,4 +69,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/salary/change', 'App\Http\Controllers\SalaryController@change')->name('salaries.change');
     Route::post('/salary', 'App\Http\Controllers\SalaryController@store')->name('salaries.store');
 
+    //profile
+    Route::get('/profile', 'App\Http\Controllers\HomeController@profile')->name('profile');
+    Route::get('/profile/edit', 'App\Http\Controllers\HomeController@profile_edit')->name('profile.edit');
+
 });

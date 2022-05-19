@@ -9,19 +9,21 @@ use App\Http\Controllers\Services\ValidationService;
 use Illuminate\Http\Request;
 use App\Models\Patient;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class PatientContoller extends Controller
 {
     use ValidationService, CreatingService, UpdatingService, Helpers;
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function __construct()
+    {
+        $this->middleware('isReceptionistOrManagerOrDoctor');
+    }
+
     public function index()
     {
         return view('components.patient.list', [
-            'patients' => Patient::with('user')->limit(10)->get(),
+            'patients' => Patient::with('user')->get(),
             'title' => 'patients'
         ]);
     }
@@ -29,12 +31,14 @@ class PatientContoller extends Controller
 
     public function create()
     {
+        if(Auth::user()->role != 'receptionist') return abort(404);
         return view('components.patient.add');
     }
 
 
     public function store(Request $request)
     {
+        if(Auth::user()->role != 'receptionist') return abort(404);
         $this->patientCreateValidation($request);
 
         if($user = $this->userExists($request->email)) {
@@ -89,6 +93,7 @@ class PatientContoller extends Controller
      */
     public function edit($identifier)
     {
+        if(Auth::user()->role != 'receptionist') return abort(404);
         if(intval($identifier))   $user = User::with('patient')->where('id', $identifier)->get()->first();
         else    $user = User::with('patient')->where('username', $identifier)->get()->first();
 
@@ -110,6 +115,7 @@ class PatientContoller extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(Auth::user()->role != 'receptionist') return abort(404);
         $this->patientUpdateValidation($request);
 
         UpdatingService::updatePatient($request, $id);
@@ -121,6 +127,7 @@ class PatientContoller extends Controller
 
     public function destroy($id)
     {
+        $this->middleware('isReceptionist');
         $this->deletePatient( User::with('patient')->find($id) );
 
         return back()->with('done', 'Deleted!');

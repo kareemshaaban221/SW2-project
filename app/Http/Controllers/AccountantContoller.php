@@ -10,6 +10,7 @@ use App\Models\Accountant;
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AccountantContoller extends Controller
 {
@@ -21,8 +22,9 @@ class AccountantContoller extends Controller
      */
     public function index()
     {
+        if(Auth::user()->role != 'manager') return abort(404);
         return view('components.accountant.list', [
-            'accountants' => Accountant::with('employee')->limit(10)->get(),
+            'accountants' => Accountant::with('employee')->get(),
             'title' => 'accountants'
         ]);
     }
@@ -30,12 +32,14 @@ class AccountantContoller extends Controller
 
     public function create()
     {
+        if(Auth::user()->role != 'manager') return abort(404);
         return view('components.accountant.add');
     }
 
 
     public function store(Request $request)
     {
+        if(Auth::user()->role != 'manager') return abort(404);
         $this->employeeCreateValidation($request);
 
         if($user = $this->userExists($request->email)) {
@@ -58,6 +62,7 @@ class AccountantContoller extends Controller
      */
     public function show($username)
     {
+        if(Auth::user()->role != 'manager') return abort(404);
         $user = User::with('employee')->where('username', $username)->get()->first();
 
         if(!$user || $user->role != 'accountant') {
@@ -77,6 +82,7 @@ class AccountantContoller extends Controller
      */
     public function edit($username)
     {
+        if(Auth::user()->role != 'manager' && Auth::user()->role != 'accountant') return abort(404);
         $user = User::with('employee')->where('username', $username)->get()->first();
 
         if(!$user || $user->role != 'accountant') {
@@ -97,6 +103,7 @@ class AccountantContoller extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(Auth::user()->role != 'manager' && Auth::user()->role != 'accountant') return abort(404);
         $this->updateValidation($request);
 
         UpdatingService::update($request, $id, Employee::class);
@@ -108,6 +115,7 @@ class AccountantContoller extends Controller
 
     public function destroy($id)
     {
+        if(Auth::user()->role != 'manager') return abort(404);
         $this->deleteEmployee( Accountant::with('employee')->find($id) );
 
         return back()->with('done', 'Deleted!');

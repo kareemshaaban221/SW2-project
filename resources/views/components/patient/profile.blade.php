@@ -9,6 +9,11 @@
             <i class="fa fa-edit"></i>
             Change Report
         </a>
+    @elseif (Auth::user()->role != 'receptionist')
+        <a href="{{route('patients.index')}}" class="btn btn-outline-dark col-10">
+            <i class="fa fa-users"></i>
+            List
+        </a>
     @else
         <a href="{{route('patients.index')}}" class="btn btn-outline-dark col-5">
             <i class="fa fa-users"></i>

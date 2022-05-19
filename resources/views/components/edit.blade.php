@@ -139,10 +139,18 @@
         @yield('edit')
 
         <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-            <a class="btn btn-outline-dark col-lg-2 col-md-2" href="{{route("{$employee}s.show", $user->username ? $user->username : $user->id)}}">
-                <i class="fa fa-user"></i>
-                Profile
-            </a>
+            @if (isset($profile))
+                <a class="btn btn-outline-dark col-lg-2 col-md-2" href="{{route("profile")}}">
+                    <i class="fa fa-user"></i>
+                    Profile
+                </a>
+            @else
+                <a class="btn btn-outline-dark col-lg-2 col-md-2" href="{{route("{$employee}s.show", $user->username ? $user->username : $user->id)}}">
+                    <i class="fa fa-user"></i>
+                    Profile
+                </a>
+            @endif
+
             <button class="btn btn-primary col-lg-4 col-md-4" type="submit">Update</button>
         </div>
     </form>

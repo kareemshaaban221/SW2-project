@@ -14,10 +14,15 @@ class ManagerController extends Controller
 {
     use ValidationService, UpdatingService, CreatingService, Helpers;
 
+    public function __construct()
+    {
+        $this->middleware('isManager');
+    }
+
     public function index()
     {
         return view('components.manager.list', [
-            'managers' => Manager::with('user')->limit(10)->get(),
+            'managers' => Manager::with('user')->get(),
             'title' => 'managers'
         ]);
     }

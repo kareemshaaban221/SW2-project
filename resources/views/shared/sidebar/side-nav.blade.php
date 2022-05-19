@@ -10,7 +10,7 @@
                     @include('shared.sidebar.links.patient')
                 @endif
 
-                @if (Auth::user()->role == 'assistant')
+                @if (Auth::user()->role == 'receptionist')
                     @include('shared.sidebar.links.patient')
                 @endif
 

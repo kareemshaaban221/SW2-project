@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Services\UpdatingService;
 use App\Http\Controllers\Services\ValidationService;
-use App\Models\Employee;
+use App\Http\Middleware\isAccountant;
 use Illuminate\Http\Request;
 
 class SalaryController extends Controller
 {
     use ValidationService, UpdatingService;
+
+    public function __construct() {
+        $this->middleware('isAccountant');
+    }
 
     public function change() {
         return view('components.accountant.change-salary');

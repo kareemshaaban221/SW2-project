@@ -14,13 +14,13 @@
     </div>
     <div class="card-body">
         <div class="m-auto">
-            <div class="row justify-content-around mb-3">
+            {{-- <div class="row justify-content-around mb-3">
                 <div class="position-relative w-auto">
                     <img src="https://icon-library.com/images/no-user-image-icon/no-user-image-icon-23.jpg" alt="" width="150" height="150" style="width: 150px; height: 150px; border-radius: 50%">
                     <button class="btn btn-warning text-light position-absolute p-0" style="width: 25px; font-size: 15px; bottom: 0; right: 20px"><i class="fa fa-plus"></i></button>
                 </div>
             </div>
-            <hr class="w-50 m-auto">
+            <hr class="w-50 m-auto"> --}}
             <div class="row mb-3 mt-3 justify-content-around">
                 <div class="col-5 text-primary" style="font-weight: bold; text-align: right;">First Name</div>
                 <div class="col-5 overflow-auto" style="height: 25px; text-align: left;">{{ucwords($user->fname)}}</div>

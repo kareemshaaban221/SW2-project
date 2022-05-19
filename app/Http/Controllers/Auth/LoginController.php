@@ -70,7 +70,7 @@ class LoginController extends Controller
                 }
 
                 $err = 'Wrong password, please try again!';
-            } else $err = 'Your Register Process Hasn\'t Completed Yet!';
+            } else $err = 'Your Register Process Hasn\'t Completed Yet! <a href="'.route('register').'">Register</a>';
         }
 
         return back()->with('err', $err)->withInput();

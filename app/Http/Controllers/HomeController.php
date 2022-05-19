@@ -39,4 +39,16 @@ class HomeController extends Controller
             'cases2022' => $currentDayStat->Confirmed
         ]);
     }
+
+    public function profile() {
+        return view('auth.profile', [
+            'user' => Auth::user()
+        ]);
+    }
+
+    public function profile_edit() {
+        return view('auth.edit', [
+            'user' => Auth::user()
+        ]);
+    }
 }

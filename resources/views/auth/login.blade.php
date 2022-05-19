@@ -6,7 +6,7 @@
 <div class="card-body ">
     @if (Session::has('err'))
         <div class="alert alert-danger">
-            {{Session::get('err')}}
+            {!!Session::get('err')!!}
         </div>
     @endif
     <form method="POST" action="{{ route('login') }}">

@@ -10,19 +10,17 @@ use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Models\Receptionist;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class ReceptionistContoller extends Controller
 {
     use ValidationService, CreatingService, UpdatingService, Helpers;
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
+        if(Auth::user()->role != 'manager') return abort(404);
         return view('components.receptionist.list', [
-            'receptionists' => Receptionist::with('employee')->limit(10)->get(),
+            'receptionists' => Receptionist::with('employee')->get(),
             'title' => 'receptionists'
         ]);
     }
@@ -30,12 +28,14 @@ class ReceptionistContoller extends Controller
 
     public function create()
     {
+        if(Auth::user()->role != 'manager') return abort(404);
         return view('components.receptionist.add');
     }
 
 
     public function store(Request $request)
     {
+        if(Auth::user()->role != 'manager') return abort(404);
         $this->employeeCreateValidation($request);
 
         if($user = $this->userExists($request->email)) {
@@ -58,6 +58,7 @@ class ReceptionistContoller extends Controller
      */
     public function show($username)
     {
+        if(Auth::user()->role != 'manager') return abort(404);
         $user = User::with('employee')->where('username', $username)->get()->first();
 
         if(!$user || $user->role != 'receptionist') {
@@ -77,6 +78,7 @@ class ReceptionistContoller extends Controller
      */
     public function edit($username)
     {
+        if(Auth::user()->role != 'manager' && Auth::user()->role != 'receptionist') return abort(404);
         $user = User::with('employee')->where('username', $username)->get()->first();
 
         if(!$user || $user->role != 'receptionist') {
@@ -97,10 +99,12 @@ class ReceptionistContoller extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(Auth::user()->role != 'manager' && Auth::user()->role != 'receptionist') return abort(404);
         $this->updateValidation($request);
 
         UpdatingService::update($request, $id, Employee::class);
 
+        if(Auth::user()->role == 'receptionist') return redirect(route('profile'))->with('done', 'Updated!');
         return redirect(route('receptionists.show', User::select('username')->where('id', $id)->get()->first()->username))
             ->with('done', 'Updated!');
     }
@@ -108,6 +112,7 @@ class ReceptionistContoller extends Controller
 
     public function destroy($id)
     {
+        if(Auth::user()->role != 'manager') return abort(404);
         $this->deleteEmployee( Receptionist::with('employee')->find($id) );
 
         return back()->with('done', 'Deleted!');

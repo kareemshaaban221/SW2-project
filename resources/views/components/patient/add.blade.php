@@ -80,7 +80,7 @@
             @error('address')
             <small class="text-danger">* {{$message}}</small>
             <script>
-                $('#inputPhone').addClass('is-invalid').removeClass('is-valid')
+                $('#inputAddress').addClass('is-invalid').removeClass('is-valid')
             </script>
             @enderror
         </div>

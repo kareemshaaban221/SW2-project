@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\Doctor;
 use App\Models\Employee;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class DoctorContoller extends Controller
 {
@@ -17,8 +18,9 @@ class DoctorContoller extends Controller
 
     public function index()
     {
+        if(Auth::user()->role != 'manager') return abort(404);
         return view('components.doctor.list', [
-            'doctors' => Doctor::with('employee')->limit(10)->get(),
+            'doctors' => Doctor::with('employee')->get(),
             'title' => 'doctors'
         ]);
     }
@@ -26,12 +28,14 @@ class DoctorContoller extends Controller
 
     public function create()
     {
+        if(Auth::user()->role != 'manager') return abort(404);
         return view('components.doctor.add');
     }
 
 
     public function store(Request $request)
     {
+        if(Auth::user()->role != 'manager') return abort(404);
         $this->employeeCreateValidation($request);
 
         if($user = $this->userExists($request->email)) {
@@ -54,6 +58,7 @@ class DoctorContoller extends Controller
      */
     public function show($username)
     {
+        if(Auth::user()->role != 'manager') return abort(404);
         $user = User::with('employee')->where('username', $username)->get()->first();
 
         if(!$user || $user->role != 'doctor') {
@@ -73,6 +78,7 @@ class DoctorContoller extends Controller
      */
     public function edit($username)
     {
+        if(Auth::user()->role != 'manager' && Auth::user()->role != 'doctor') return abort(404);
         $user = User::with('employee')->where('username', $username)->get()->first();
 
         if(!$user || $user->role != 'doctor') {
@@ -93,6 +99,7 @@ class DoctorContoller extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(Auth::user()->role != 'manager' && Auth::user()->role != 'doctor') return abort(404);
         $this->updateValidation($request);
 
         UpdatingService::update($request, $id, Employee::class);
@@ -104,6 +111,7 @@ class DoctorContoller extends Controller
 
     public function destroy($id)
     {
+        if(Auth::user()->role != 'manager') return abort(404);
         $this->deleteEmployee( Doctor::with('employee')->find($id) );
 
         return back()->with('done', 'Deleted!');

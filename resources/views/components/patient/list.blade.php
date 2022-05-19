@@ -15,11 +15,13 @@
                 <i class="fas fa-table me-1"></i>
                 {{ ucwords($title) }} Info.
             </div>
+            @if (Auth::user()->role == 'receptionist')
             <div class="w-auto">
                 <a href="{{route('patients.create')}}" class="btn btn-primary p-1 pt-0 pb-0" id="add" data-toggle="tooltip" title="Add New Patient">
                     <i class="fa fa-plus"></i>
                 </a>
             </div>
+            @endif
         </div>
 
     </div>
@@ -30,7 +32,7 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Phone</th>
-                    <th>Actions</th>
+                    @if (Auth::user()->role == 'receptionist') <th>Actions</th> @endif
                 </tr>
             </thead>
             <tfoot>
@@ -38,7 +40,7 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Phone</th>
-                    <th>Actions</th>
+                    @if (Auth::user()->role == 'receptionist') <th>Actions</th> @endif
                 </tr>
             </tfoot>
             <tbody>
@@ -56,15 +58,17 @@
                         </td>
                         <td>{{$patient->user->email}}</td>
                         <td>{{$patient->user->phone}}</td>
-                        <td>
-                            <form action="{{route('patients.destroy', $patient->user->id)}}" method="POST" class="p-0">
-                                @csrf
-                                @method('DELETE')
-                                <button onclick="return confirm('Are you sure to complete this operation?')" type="submit" class="btn border-none text-danger p-0">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                            </form>
-                        </td>
+                        @if (Auth::user()->role == 'receptionist')
+                            <td>
+                                <form action="{{route('patients.destroy', $patient->user->id)}}" method="POST" class="p-0">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button onclick="return confirm('Are you sure to complete this operation?')" type="submit" class="btn border-none text-danger p-0">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        @endif
                     </tr>
 
                 @endforeach
